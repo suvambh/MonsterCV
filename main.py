@@ -17,10 +17,11 @@ from ui_cards import (
 from cv_form_parser import parse_cv_form_data
 from cv_services import cv_service
 from cv_schema import empty_cv
-
+from upload_service import UploadService
 
 app, rt = fast_app(hdrs=Theme.blue.headers())
 
+upload_service = UploadService()
 
 # --------------------------------------------------
 # In-memory state for demo purposes
@@ -129,29 +130,17 @@ async def save_cv(request):
     try:
         form = await request.form()
 
-        # --- HANDLE PHOTO UPLOAD ---
+        # Parse submitted form into canonical CV data
+        cv_data = parse_cv_form_data(form)
+
+        # Preserve existing photo unless a new file is uploaded
         photo_file = form.get("photo_file")
+        existing_photo_path = CURRENT_CV_DATA.get("photo", "")
+        new_photo_path = upload_service.save_photo(photo_file)
 
-        photo_path = CURRENT_CV_DATA.get("photo", "")
+        cv_data["photo"] = new_photo_path or existing_photo_path
 
-        if photo_file and getattr(photo_file, "filename", ""):
-            upload_dir = Path("static/uploads")
-            upload_dir.mkdir(parents=True, exist_ok=True)
-
-            file_path = upload_dir / photo_file.filename
-
-            with open(file_path, "wb") as f:
-                f.write(await photo_file.read())
-
-            photo_path = f"/static/uploads/{photo_file.filename}"
-
-
-
-        # --- PARSE FORM ---
-        CURRENT_CV_DATA = parse_cv_form_data(form)
-
-        # inject uploaded photo path
-        CURRENT_CV_DATA["photo"] = photo_path
+        CURRENT_CV_DATA = cv_data
 
         html_file, pdf_file = cv_service.save_and_generate(CURRENT_CV_DATA)
 
