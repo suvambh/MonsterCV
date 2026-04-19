@@ -16,6 +16,7 @@ from ui_cards import (
 
 from cv_form_parser import parse_cv_form_data
 from cv_services import cv_service
+from cv_schema import empty_cv
 
 
 app, rt = fast_app(hdrs=Theme.blue.headers())
@@ -26,25 +27,7 @@ app, rt = fast_app(hdrs=Theme.blue.headers())
 # Replace later with session/db/persistence if needed
 # --------------------------------------------------
 
-CURRENT_CV_DATA: dict = {
-    "name": "",
-    "title": "",
-    "photo": "",
-    "location": "",
-    "summary": "",
-    "contact": {
-        "email": "",
-        "phone": "",
-        "linkedin": "",
-        "github": "",
-    },
-    "skills": [],
-    "experience": [],
-    "projects": [],
-    "education": [],
-    "certifications": [],
-}
-
+CURRENT_CV_DATA = empty_cv()
 
 # --------------------------------------------------
 # Top upload section

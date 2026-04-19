@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 from typing import Any
-
+from cv_schema import empty_cv
 
 def _as_str(value: Any, default: str = "") -> str:
     if value is None:
@@ -126,29 +126,31 @@ def _normalize_skills(items: Any) -> list[dict[str, Any]]:
     return out
 
 
-def normalize_cv_data(data: dict[str, Any]) -> dict[str, Any]:
-    contact = data.get("contact", {})
-    if not isinstance(contact, dict):
-        contact = {}
 
-    return {
-        "name": _as_str(data.get("name")),
-        "title": _as_str(data.get("title")),
-        "photo": _as_str(data.get("photo")),
-        "location": _as_str(data.get("location")),
-        "summary": _as_str(data.get("summary")),
-        "contact": {
-            "email": _as_str(contact.get("email")),
-            "phone": _as_str(contact.get("phone")),
-            "linkedin": _as_str(contact.get("linkedin")),
-            "github": _as_str(contact.get("github")),
-        },
-        "skills": _normalize_skills(data.get("skills")),
-        "experience": _normalize_experience(data.get("experience")),
-        "projects": _normalize_projects(data.get("projects")),
-        "education": _normalize_education(data.get("education")),
-        "certifications": _normalize_certifications(data.get("certifications")),
-    }
+
+def normalize_cv_data(data: dict) -> dict:
+    cv = empty_cv()
+
+    cv["name"] = data.get("name", "")
+    cv["title"] = data.get("title", "")
+    cv["photo"] = data.get("photo", "")
+    cv["location"] = data.get("location", "")
+    cv["summary"] = data.get("summary", "")
+
+    contact = data.get("contact", {})
+    if isinstance(contact, dict):
+        cv["contact"]["email"] = contact.get("email", "")
+        cv["contact"]["phone"] = contact.get("phone", "")
+        cv["contact"]["linkedin"] = contact.get("linkedin", "")
+        cv["contact"]["github"] = contact.get("github", "")
+
+    cv["skills"] = data.get("skills", [])
+    cv["experience"] = data.get("experience", [])
+    cv["projects"] = data.get("projects", [])
+    cv["education"] = data.get("education", [])
+    cv["certifications"] = data.get("certifications", [])
+
+    return cv
 
 
 def load_cv_json(path: str | Path) -> dict[str, Any]:
