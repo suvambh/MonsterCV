@@ -1,0 +1,90 @@
+# AI Project Map
+
+## Active files
+
+* `main.py` — app entry point, routes, save flow, photo upload handling
+* `ui_sections.py` — MonsterUI form sections and conditional photo preview
+* `cv_form_parser.py` — converts submitted form data into canonical CV structure
+* `cv_loader.py` — loads and normalizes uploaded JSON into canonical CV structure
+* `cv_service.py` — orchestration for save + render + PDF generation
+* `cv_services.py` — dependency wiring / service instantiation
+* `render_service.py` — Jinja render layer, including photo-path conversion for PDF
+* `pdf_service.py` — WeasyPrint wrapper
+* `templates/cv.html` — HTML template used for final CV render
+
+## Legacy / reference code
+
+* Any older FastHTML-only files are reference material unless explicitly imported by active modules.
+
+## Canonical CV data shape
+
+```python
+{
+  "name": str,
+  "title": str,
+  "photo": str,
+  "location": str,
+  "summary": str,
+  "contact": {
+      "email": str,
+      "phone": str,
+      "linkedin": str,
+      "github": str
+  },
+  "skills": [{"category": str, "items": [str]}],
+  "experience": [...],
+  "projects": [...],
+  "education": [...],
+  "certifications": [...]
+}
+```
+
+## Main runtime flow
+
+1. User edits form in MonsterUI
+2. `/save` route in `main.py` receives form submission
+3. Photo upload is saved to `static/uploads/`
+4. `parse_cv_form_data(form)` creates normalized CV data
+5. `cv_service.save_and_generate(...)` is called
+6. `RenderService` renders Jinja HTML
+7. `PDFService` generates PDF via WeasyPrint
+
+## Photo path rule
+
+* In app/browser state, `photo` should be a browser path like `/static/uploads/file.jpg`
+* In PDF rendering, `RenderService` converts that path to a `file:///...` URI
+* Do not store the PDF URI directly in app state
+
+## Immediate photo preview
+
+* Browser preview is client-side only
+* Implemented via `previewPhoto(input)` JavaScript
+* Triggered by `onchange="previewPhoto(this)"` on the photo file input
+* Persistent preview after save comes from `data["photo"]`
+
+## Edit guide
+
+* Change form layout: `ui_sections.py`
+* Change request/save flow: `main.py`
+* Change how form data becomes CV data: `cv_form_parser.py`
+* Change JSON normalization: `cv_loader.py`
+* Change HTML rendering behavior: `render_service.py`
+* Change PDF generation behavior: `pdf_service.py`
+* Change CV appearance: `templates/cv.html` and CSS theme
+
+## Invariants
+
+* All input paths must normalize into the same canonical CV structure
+* Template must match canonical data structure exactly
+* Browser image paths and PDF image paths must remain separate concerns
+
+## Current status
+- MonsterUI form editing works
+- JSON upload works
+- photo upload + immediate preview works
+- HTML generation works
+- PDF generation works
+- current architecture is modular but still evolving
+
+```
+```
