@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ name }} - CV</title>
+    <link rel="stylesheet" href="../templates/{{ theme_css if theme_css else 'style.css' }}">
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="header-left">
+                <h1>{{ name }}</h1>
+
+                {% if title %}
+                <p class="headline">{{ title }}</p>
+                {% endif %}
+
+                {% set contact_items = [] %}
+                {% if contact.email %}{% set _ = contact_items.append(contact.email) %}{% endif %}
+                {% if contact.phone %}{% set _ = contact_items.append(contact.phone) %}{% endif %}
+                {% if location %}{% set _ = contact_items.append(location) %}{% endif %}
+                {% if contact.linkedin %}{% set _ = contact_items.append(contact.linkedin) %}{% endif %}
+                {% if contact.github %}{% set _ = contact_items.append(contact.github) %}{% endif %}
+
+                {% if contact_items %}
+                <p class="contact">{{ contact_items | join(" | ") }}</p>
+                {% endif %}
+            </div>
+
+            {% if photo %}
+            <div class="header-right">
+                <img src="{{ photo }}" class="profile-pic" alt="Photo de profil">
+            </div>
+            {% endif %}
+
+            <div class="clear"></div>
+        </header>
+
+        {% if summary %}
+        <section class="section">
+            <h2>Résumé</h2>
+            <p class="summary">{{ summary }}</p>
+        </section>
+        {% endif %}
+
+        {% if experience %}
+        <section class="section">
+            <h2>Expérience</h2>
+            {% for job in experience %}
+            <div class="entry">
+                <div class="entry-header">
+                    <div class="entry-left">
+                        <h3>{{ job.role }}</h3>
+
+                        {% set job_subline = [] %}
+                        {% if job.company %}{% set _ = job_subline.append(job.company) %}{% endif %}
+                        {% if job.location %}{% set _ = job_subline.append(job.location) %}{% endif %}
+
+                        {% if job_subline %}
+                        <p class="subline">{{ job_subline | join(" · ") }}</p>
+                        {% endif %}
+                    </div>
+
+                    {% if job.duration %}
+                    <div class="entry-right">
+                        {{ job.duration }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                {% if job.tech %}
+                <p class="meta-line"><strong>Tech :</strong> {{ job.tech }}</p>
+                {% endif %}
+
+                {% if job.details %}
+                {% set valid_details = [] %}
+                {% for item in job.details %}
+                    {% if item and item | trim %}
+                        {% set _ = valid_details.append(item) %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if valid_details %}
+                <ul class="bullets">
+                    {% for item in valid_details %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </section>
+        {% endif %}
+
+        {% if projects %}
+        <section class="section">
+            <h2>Projets</h2>
+            {% for project in projects %}
+            <div class="entry">
+                <div class="entry-header">
+                    <div class="entry-left">
+                        <h3>{{ project.name }}</h3>
+                        {% if project.tech %}
+                        <p class="subline">{{ project.tech }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if project.details %}
+                {% set valid_project_details = [] %}
+                {% for item in project.details %}
+                    {% if item and item | trim %}
+                        {% set _ = valid_project_details.append(item) %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if valid_project_details %}
+                <ul class="bullets">
+                    {% for item in valid_project_details %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </section>
+        {% endif %}
+
+        {% if education %}
+        <section class="section">
+            <h2>Formation</h2>
+            {% for edu in education %}
+            <div class="entry">
+                <div class="entry-header">
+                    <div class="entry-left">
+                        <h3>{{ edu.degree }}</h3>
+                        {% if edu.institution %}
+                        <p class="subline">{{ edu.institution }}</p>
+                        {% endif %}
+                    </div>
+
+                    {% if edu.year %}
+                    <div class="entry-right">
+                        {{ edu.year }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+        {% endif %}
+
+        {% if skills %}
+        <section class="section">
+            <h2>Compétences techniques</h2>
+            <div class="skills-list">
+                {% for skill in skills %}
+                    {% set valid_items = [] %}
+                    {% for item in skill["items"] %}
+                        {% if item and item | trim %}
+                            {% set _ = valid_items.append(item) %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if skill["category"] or valid_items %}
+                    <p>
+                        {% if skill["category"] %}<strong>{{ skill["category"] }} :</strong>{% endif %}
+                        {% if valid_items %} {{ valid_items | join(", ") }}{% endif %}
+                    </p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if certifications %}
+        <section class="section">
+            <h2>Certifications</h2>
+            {% for cert in certifications %}
+            <div class="entry compact-entry">
+                <div class="entry-header">
+                    <div class="entry-left">
+                        <h3>{{ cert.name }}</h3>
+                        {% if cert.issuer %}
+                        <p class="subline">{{ cert.issuer }}</p>
+                        {% endif %}
+                    </div>
+
+                    {% if cert.year %}
+                    <div class="entry-right">
+                        {{ cert.year }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+        {% endif %}
+    </div>
+</body>
+</html>

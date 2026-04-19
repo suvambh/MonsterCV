@@ -1,0 +1,52 @@
+# -------------------------
+# Python
+# -------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# -------------------------
+# IDE / Editor
+# -------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# -------------------------
+# OS files
+# -------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------
+# Logs / temp
+# -------------------------
+*.log
+
+# -------------------------
+# App-specific
+# -------------------------
+
+# Uploaded files (important)
+static/uploads/
+
+# Generated outputs
+output/
+output/*.html
+output/*.pdf
+
+# Data (optional)
+data/cv_data.json
+
+# -------------------------
+# PDF only (optional fallback)
+# -------------------------
+*.pdf

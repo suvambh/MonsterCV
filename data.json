@@ -1,0 +1,160 @@
+{
+  "name": "CV Special19",
+  "title": "Data Scientist | Data Analytics | Scientific Computing",
+  "photo": "../app/static/photo.jpeg",
+  "location": "France",
+
+  "contact": {
+    "email": "",
+    "phone": "",
+    "linkedin": "",
+    "github": ""
+  },
+
+  "summary": "Data scientist spécialisé en ingénierie des données et modélisation, avec une forte expérience en Python, SQL et environnements cloud. Conception de pipelines robustes et reproductibles, avec un accent sur l’automatisation, la scalabilité et la qualité des données.",
+
+  "skills": [
+    {
+      "category": "Langages",
+      "items": ["Python", "SQL", "Bash", "MATLAB"]
+    },
+    {
+      "category": "Cloud & DevOps",
+      "items": ["AWS", "Terraform", "EKS", "CI/CD", "GitLab CI", "Slurm"]
+    },
+    {
+      "category": "Data Engineering",
+      "items": ["ETL", "Data Warehousing", "Modélisation des données", "Qualité des données"]
+    },
+    {
+      "category": "Machine Learning",
+      "items": ["Machine Learning", "ARIMA", "SARIMA", "Séries temporelles"]
+    },
+    {
+      "category": "Outils",
+      "items": ["PostgreSQL", "MySQL", "Power BI", "Tableau", "Talend"]
+    }
+  ],
+
+  "experience": [
+    {
+      "role": "Ingénieur Data / Cloud",
+      "company": "Eolen AS+",
+      "duration": "2024",
+      "location": "Bruyères-le-Châtel",
+      "tech": "AWS, Terraform, EKS, Slurm, GitLab CI, Bash",
+      "details": [
+        "Mise en place de pipelines CI/CD pour le déploiement d’environnements de calcul distribués.",
+        "Conception de workflows reproductibles pour le traitement de données à grande échelle.",
+        "Automatisation de tâches critiques via scripts Bash pour améliorer la productivité des équipes.",
+        "Optimisation de l’utilisation des ressources de calcul et de stockage sur infrastructure cloud."
+      ]
+    },
+    {
+      "role": "Data Scientist Freelance",
+      "company": "",
+      "duration": "2023",
+      "location": "",
+      "tech": "ARIMA, SARIMA, Machine Learning, AWS",
+      "details": [
+        "Développement de modèles de prévision de rupture de stock basés sur des séries temporelles.",
+        "Conception de pipelines de données et mise en place d’un data warehouse sur AWS.",
+        "Analyse des résultats et contribution à la prise de décision stratégique."
+      ]
+    },
+    {
+      "role": "Enseignant en Informatique",
+      "company": "I.U.T.",
+      "duration": "2019 - 2021",
+      "location": "Orsay",
+      "tech": "POO, algorithmes avancés",
+      "details": [
+        "Enseignement de la programmation orientée objet et des structures algorithmiques.",
+        "Encadrement de projets étudiants et accompagnement pédagogique."
+      ]
+    },
+    {
+      "role": "Doctorant en Physique",
+      "company": "LPS",
+      "duration": "2018 - 2022",
+      "location": "Orsay",
+      "tech": "Python, modélisation, simulation numérique",
+      "details": [
+        "Analyse de données scientifiques complexes en Python.",
+        "Modélisation et simulation numérique de systèmes physiques à haute dimension.",
+        "Développement d’outils d’analyse et d’interprétation des résultats expérimentaux.",
+        "Thèse : https://theses.hal.science/tel-03577251/"
+      ]
+    },
+    {
+      "role": "Stagiaire de recherche",
+      "company": "CNRS – Thales",
+      "duration": "févr. 2018 - août 2018",
+      "location": "Palaiseau",
+      "tech": "MATLAB, physique expérimentale",
+      "details": [
+        "Étude du gaz d'électrons bidimensionnel dans le groupe d'Albert Fert.",
+        "Réalisation d’expériences et simulations numériques sous MATLAB.",
+        "Contribution à une publication scientifique : https://advanced.onlinelibrary.wiley.com/doi/abs/10.1002/adma.202102102"
+      ]
+    }
+  ],
+
+  "projects": [
+    {
+      "name": "Communauté IA & Mentorat",
+      "tech": "IA, mentoring, debugging, communauté",
+      "details": [
+        "Animation d’une communauté Discord dédiée à l’intelligence artificielle.",
+        "Accompagnement d’étudiants en data science (debugging, compréhension des concepts).",
+        "Transmission de bonnes pratiques en résolution de problèmes et structuration du raisonnement."
+      ]
+    },
+    {
+      "name": "Pratiques de pleine conscience & leadership",
+      "tech": "Effortless Mindfulness",
+      "details": [
+        "Facilitation de sessions EM (Effortless Mindfulness) orientées clarté mentale et prise de décision.",
+        "Application des principes de présence et d’attention dans des contextes techniques et collaboratifs."
+      ]
+    }
+  ],
+
+  "education": [
+    {
+      "degree": "Diplôme d’ingénieur",
+      "institution": "École Polytechnique",
+      "location": "Palaiseau",
+      "year": "2014 - 2018"
+    },
+    {
+      "degree": "Certification Data Management",
+      "institution": "Datascientest",
+      "location": "Paris",
+      "year": "2023"
+    }
+  ],
+
+  "certifications": [
+    {
+      "name": "AWS Certified Solutions Architect – Associate",
+      "issuer": "AWS",
+      "year": ""
+    },
+    {
+      "name": "Applied Machine Learning in Python",
+      "issuer": "University of Michigan",
+      "year": ""
+    },
+    {
+      "name": "Introduction to Data Science in Python",
+      "issuer": "University of Michigan",
+      "year": ""
+    },
+    {
+      "name": "Machine Learning in Production",
+      "issuer": "DeepLearning.AI",
+      "year": ""
+    }
+  ]
+}
