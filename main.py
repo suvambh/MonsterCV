@@ -18,11 +18,16 @@ from cv_form_parser import parse_cv_form_data
 from cv_services import cv_service
 from cv_schema import empty_cv
 from upload_service import UploadService
+from editor_workflow_service import EditorWorkflowService
 
 app, rt = fast_app(hdrs=Theme.blue.headers())
 
 upload_service = UploadService()
-
+save_workflow = EditorWorkflowService(
+    upload_service=upload_service,
+    cv_service=cv_service,
+    parse_cv_form_data=parse_cv_form_data,
+)
 # --------------------------------------------------
 # In-memory state for demo purposes
 # Replace later with session/db/persistence if needed
@@ -130,25 +135,10 @@ async def save_cv(request):
     try:
         form = await request.form()
 
-        # Parse submitted form into canonical CV data
-        cv_data = parse_cv_form_data(form)
+        result = save_workflow.save_submission(form, CURRENT_CV_DATA)
+        CURRENT_CV_DATA = result.cv_data
 
-        # Preserve existing photo unless a new file is uploaded
-        photo_file = form.get("photo_file")
-        existing_photo_path = CURRENT_CV_DATA.get("photo", "")
-        new_photo_path = upload_service.save_photo(photo_file)
-
-        cv_data["photo"] = new_photo_path or existing_photo_path
-
-        CURRENT_CV_DATA = cv_data
-
-        html_file, pdf_file = cv_service.save_and_generate(CURRENT_CV_DATA)
-
-        message = (
-            f"CV enregistré avec succès. "
-            f"HTML généré: {html_file.name} | PDF généré: {pdf_file.name}"
-        )
-        return editor_page(CURRENT_CV_DATA, message)
+        return editor_page(CURRENT_CV_DATA, result.message)
 
     except Exception as e:
         return editor_page(
