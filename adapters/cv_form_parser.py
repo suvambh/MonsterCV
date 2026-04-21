@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from cv_loader import normalize_cv_data
+from adapters.cv_loader import normalize_cv_data
 
 
 def _first_value(form: Any, key: str, default: str = "") -> str:

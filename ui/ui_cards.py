@@ -3,7 +3,7 @@ from __future__ import annotations
 from fasthtml.common import *
 from monsterui.all import *
 
-from ui_helpers import text_value, textarea_value, list_to_csv
+from ui.ui_helpers import text_value, textarea_value, list_to_csv
 
 
 def experience_card(item: dict | None = None):

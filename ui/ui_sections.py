@@ -3,8 +3,8 @@ from __future__ import annotations
 from fasthtml.common import *
 from monsterui.all import *
 
-from ui_helpers import section_header
-from ui_cards import (
+from ui.ui_helpers import section_header
+from ui.ui_cards import (
     experience_card,
     project_card,
     education_card,

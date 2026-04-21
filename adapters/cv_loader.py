@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 from typing import Any
-from cv_schema import empty_cv
+from domain.cv_schema import empty_cv
 
 def _as_str(value: Any, default: str = "") -> str:
     if value is None:
