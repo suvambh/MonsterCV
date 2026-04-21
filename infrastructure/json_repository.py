@@ -5,32 +5,15 @@ from pathlib import Path
 from typing import Any
 
 
-class CVRepository:
+class JSONRepository:
     """Simple JSON file repository for CV data."""
 
     def __init__(self, file_path: Path) -> None:
         self.file_path = file_path
 
-    def load(self) -> dict[str, Any]:
+    def load(self) -> dict[str, Any] | None:
         if not self.file_path.exists():
-            return {
-                "name": "",
-                "title": "",
-                "photo": "",
-                "location": "",
-                "summary": "",
-                "contact": {
-                    "email": "",
-                    "phone": "",
-                    "linkedin": "",
-                    "github": "",
-                },
-                "skills": [],
-                "experience": [],
-                "projects": [],
-                "education": [],
-                "certifications": [],
-            }
+            return None
 
         with self.file_path.open("r", encoding="utf-8") as f:
             return json.load(f)

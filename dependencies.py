@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from infrastructure.cv_repository import CVRepository
+from infrastructure.json_repository import JSONRepository
 from infrastructure.pdf_service import PDFService
 from infrastructure.render_service import RenderService
 
@@ -17,7 +17,7 @@ OUTPUT_DIR = BASE_DIR / "output"
 TEMPLATES_DIR = BASE_DIR / "templates"
 
 
-repository = CVRepository(DATA_DIR / "cv_data.json")
+repository = JSONRepository(DATA_DIR / "cv_data.json")
 render_service = RenderService(TEMPLATES_DIR, default_theme="terminal.css")
 pdf_service = PDFService(BASE_DIR, weasyprint_bin="weasyprint")
 
