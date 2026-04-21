@@ -3,9 +3,9 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from cv_repository import CVRepository
-from pdf_service import PDFService
-from render_service import RenderService
+from infrastructure.cv_repository import CVRepository
+from infrastructure.pdf_service import PDFService
+from infrastructure.render_service import RenderService
 
 
 class CVService:

@@ -3,10 +3,10 @@ from __future__ import annotations
 from fasthtml.common import *
 from monsterui.all import *
 
-from cv_loader import load_cv_json_from_bytes
-from ui_helpers import page_scripts, message_alert, section_header
-from ui_sections import build_form_sections, action_bar
-from ui_cards import (
+from adapters.cv_loader import load_cv_json_from_bytes
+from ui.ui_helpers import page_scripts, message_alert, section_header
+from ui.ui_sections import build_form_sections, action_bar
+from ui.ui_cards import (
     experience_card,
     project_card,
     education_card,
@@ -14,11 +14,12 @@ from ui_cards import (
     skill_card,
 )
 
-from cv_form_parser import parse_cv_form_data
+from adapters.cv_form_parser import parse_cv_form_data
 from cv_services import cv_service
-from cv_schema import empty_cv
-from upload_service import UploadService
-from editor_workflow_service import EditorWorkflowService
+from domain.cv_schema import empty_cv
+from infrastructure.upload_service import UploadService
+from use_cases.editor_workflow_service import EditorWorkflowService
+
 
 app, rt = fast_app(hdrs=Theme.blue.headers())
 
