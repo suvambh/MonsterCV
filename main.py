@@ -15,7 +15,7 @@ from ui.ui_cards import (
 )
 
 from adapters.cv_form_parser import parse_cv_form_data
-from cv_services import cv_service
+from dependencies import cv_service
 from domain.cv_schema import empty_cv
 from infrastructure.upload_service import UploadService
 from use_cases.editor_workflow_service import EditorWorkflowService
