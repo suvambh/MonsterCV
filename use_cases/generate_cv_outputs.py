@@ -1,37 +1,37 @@
+# use_cases/generate_cv_outputs.py
+
 from __future__ import annotations
 
 from pathlib import Path
 from typing import Any
 
-from infrastructure.cv_repository import CVRepository
 from infrastructure.pdf_service import PDFService
 from infrastructure.render_service import RenderService
+from use_cases.cv_persistence import CVPersistence
 
 
-class CVService:
-    """Application service for loading, saving, rendering, and exporting CV data."""
+class GenerateCVOutputs:
+    """Use case for rendering CV HTML and exporting CV PDF."""
 
     def __init__(
         self,
-        repository: CVRepository,
+        persistence: CVPersistence,
         render_service: RenderService,
         pdf_service: PDFService,
         output_dir: Path,
         default_theme: str = "terminal.css",
     ) -> None:
-        self.repository = repository
+        self.persistence = persistence
         self.render_service = render_service
         self.pdf_service = pdf_service
         self.output_dir = output_dir
         self.default_theme = default_theme
 
-    def load_cv(self) -> dict[str, Any]:
-        return self.repository.load()
-
-    def save_cv(self, data: dict[str, Any]) -> None:
-        self.repository.save(data)
-
-    def generate_outputs(self, data: dict[str, Any], theme_css: str | None = None) -> tuple[Path, Path]:
+    def generate_outputs(
+        self,
+        data: dict[str, Any],
+        theme_css: str | None = None,
+    ) -> tuple[Path, Path]:
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
         html_file = self.output_dir / "cv_output.html"
@@ -46,16 +46,10 @@ class CVService:
 
         return html_file, pdf_file
 
-    def save_and_generate(self, data: dict[str, Any], theme_css: str | None = None) -> tuple[Path, Path]:
-        self.save_cv(data)
-        return self.generate_outputs(data, theme_css=theme_css)
-
-    def ensure_preview_exists(self, theme_css: str | None = None) -> tuple[Path, Path]:
-        html_file = self.output_dir / "cv_output.html"
-        pdf_file = self.output_dir / "cv_output.pdf"
-
-        if html_file.exists() and pdf_file.exists():
-            return html_file, pdf_file
-
-        data = self.load_cv()
+    def save_and_generate(
+        self,
+        data: dict[str, Any],
+        theme_css: str | None = None,
+    ) -> tuple[Path, Path]:
+        self.persistence.save_cv(data)
         return self.generate_outputs(data, theme_css=theme_css)

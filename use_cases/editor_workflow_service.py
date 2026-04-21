@@ -24,9 +24,9 @@ class EditorWorkflowService:
     - return updated CV data plus user-facing message
     """
 
-    def __init__(self, upload_service, cv_service, parse_cv_form_data):
+    def __init__(self, upload_service, generate_cv_outputs, parse_cv_form_data):
         self.upload_service = upload_service
-        self.cv_service = cv_service
+        self.generate_cv_outputs = generate_cv_outputs
         self.parse_cv_form_data = parse_cv_form_data
 
     def save_submission(self, form, current_cv_data: dict[str, Any]) -> SaveCVResult:
@@ -38,7 +38,7 @@ class EditorWorkflowService:
 
         cv_data["photo"] = new_photo_path or existing_photo_path
 
-        html_file, pdf_file = self.cv_service.save_and_generate(cv_data)
+        html_file, pdf_file = self.generate_cv_outputs.save_and_generate(cv_data)
 
         message = (
             f"CV enregistré avec succès. "

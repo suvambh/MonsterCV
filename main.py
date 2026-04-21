@@ -15,7 +15,7 @@ from ui.ui_cards import (
 )
 
 from adapters.cv_form_parser import parse_cv_form_data
-from dependencies import cv_service
+from dependencies import generate_cv_outputs
 from domain.cv_schema import empty_cv
 from infrastructure.upload_service import UploadService
 from use_cases.editor_workflow_service import EditorWorkflowService
@@ -26,9 +26,10 @@ app, rt = fast_app(hdrs=Theme.blue.headers())
 upload_service = UploadService()
 save_workflow = EditorWorkflowService(
     upload_service=upload_service,
-    cv_service=cv_service,
+    generate_cv_outputs=generate_cv_outputs,
     parse_cv_form_data=parse_cv_form_data,
 )
+
 # --------------------------------------------------
 # In-memory state for demo purposes
 # Replace later with session/db/persistence if needed
