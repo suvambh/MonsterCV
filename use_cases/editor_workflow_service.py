@@ -1,14 +1,22 @@
-# editor_workflow_service.py
+from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
+
+from use_cases.ports import (
+    CVData,
+    CVFormParserPort,
+    CVOutputGeneratorPort,
+    PhotoStoragePort,
+)
 
 
 @dataclass
 class SaveCVResult:
-    cv_data: dict[str, Any]
-    html_file: Any
-    pdf_file: Any
+    cv_data: CVData
+    html_file: Path
+    pdf_file: Path
     message: str
 
 
@@ -24,12 +32,21 @@ class EditorWorkflowService:
     - return updated CV data plus user-facing message
     """
 
-    def __init__(self, upload_service, generate_cv_outputs, parse_cv_form_data):
+    def __init__(
+        self,
+        upload_service: PhotoStoragePort,
+        generate_cv_outputs: CVOutputGeneratorPort,
+        parse_cv_form_data: CVFormParserPort,
+    ) -> None:
         self.upload_service = upload_service
         self.generate_cv_outputs = generate_cv_outputs
         self.parse_cv_form_data = parse_cv_form_data
 
-    def save_submission(self, form, current_cv_data: dict[str, Any]) -> SaveCVResult:
+    def save_submission(
+        self,
+        form: Any,
+        current_cv_data: CVData,
+    ) -> SaveCVResult:
         cv_data = self.parse_cv_form_data(form)
 
         photo_file = form.get("photo_file")
