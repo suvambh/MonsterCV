@@ -20,6 +20,30 @@ class SaveCVResult:
     message: str
 
 
+def parse_submission_form(
+    form: Any,
+    parser: CVFormParserPort,
+) -> CVData:
+    return parser(form)
+
+
+def generate_cv_artifacts(
+    cv_data: CVData,
+    output_generator: CVOutputGeneratorPort,
+) -> tuple[Path, Path]:
+    return output_generator.save_and_generate(cv_data)
+
+
+def build_save_success_message(
+    html_file: Path,
+    pdf_file: Path,
+) -> str:
+    return (
+        "CV enregistré avec succès. "
+        f"HTML généré: {html_file.name} | PDF généré: {pdf_file.name}"
+    )
+
+
 class EditorWorkflowService:
     """
     Orchestrates editor save workflow.
@@ -47,20 +71,19 @@ class EditorWorkflowService:
         form: Any,
         current_cv_data: CVData,
     ) -> SaveCVResult:
-        cv_data = self.parse_cv_form_data(form)
+        cv_data = parse_submission_form(form, self.parse_cv_form_data)
 
         photo_file = form.get("photo_file")
         existing_photo_path = current_cv_data.get("photo", "")
         new_photo_path = self.upload_service.save_photo(photo_file)
-
         cv_data["photo"] = new_photo_path or existing_photo_path
 
-        html_file, pdf_file = self.generate_cv_outputs.save_and_generate(cv_data)
-
-        message = (
-            f"CV enregistré avec succès. "
-            f"HTML généré: {html_file.name} | PDF généré: {pdf_file.name}"
+        html_file, pdf_file = generate_cv_artifacts(
+            cv_data,
+            self.generate_cv_outputs,
         )
+
+        message = build_save_success_message(html_file, pdf_file)
 
         return SaveCVResult(
             cv_data=cv_data,
